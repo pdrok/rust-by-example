@@ -9,7 +9,7 @@ struct MinMax(i64, i64);
 impl fmt::Display for MinMax {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         // Use `self.number` to refer to each positional data point.
-        write!(f, "({}, {}", self.0, self.1)
+        write!(f, "({}, {})", self.0, self.1)
     }
 }
 
@@ -22,12 +22,23 @@ struct Point2D {
 
 // Similarly, implement `Display` for `Point2D`.
 impl fmt::Display for Point2D {
-    fm fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         // Customize so only `x` and `y` are donoted.
         write!(f, "x: {}, y: {}", self.x, self.y)
     }
 }
 
+#[derive(Debug)]
+struct Complex {
+    real: f64,
+    imag: f64
+}
+
+impl fmt::Display for Complex {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{} + {}i", self.real, self.imag)
+    }
+}
 fn main() {
     let minmax = MinMax(0, 14);
 
@@ -48,6 +59,11 @@ fn main() {
     println!("Display: {}", point);
     println!("Debug: {:?}", point);
 
+    let complex = Complex {real: 3.3, imag: 7.2};
+
+    println!("Compare points:");
+    println!("Display: {}", complex);
+    println!("Debug: {:?}", complex);
 
     // Error. Both `Debug` and `Display` were implemented, but `{:b}`
     // requires `fmt::Binary` to be implemented. This will not work.
