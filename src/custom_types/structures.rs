@@ -14,6 +14,7 @@ struct Unit;
 struct Pair(i32, f32);
 
 // A struct with two fields
+#[derive(Debug, Copy, Clone)]
 struct Point {
     x: f32,
     y: f32,
@@ -78,4 +79,43 @@ fn main() {
     let Pair(integer, decimal) = pair;
 
     println!("pair contains {:?} and {:?}", integer, decimal);
+
+    // Calculate the area of a rectangle
+    let rect_area = rect_area(&_rectangle);
+    println!("The area of the rectangle is {}", rect_area);
+
+    // Create a square based on a point and a size
+    let my_square = square(point, 5.0);
+    println!(
+        "Square top left: ({}, {}), bottom right: ({}, {})",
+        my_square.top_left.x,
+        my_square.top_left.y,
+        my_square.bottom_right.x,
+        my_square.bottom_right.y
+    );
+}
+
+// Function to calculate the area of a rectangle
+fn rect_area(rectangle: &Rectangle) -> f32 {
+    let Rectangle {
+        top_left: Point { x: x1, y: y1 },
+        bottom_right: Point { x: x2, y: y2 },
+    } = rectangle;
+
+    let width = (x2 - x1).abs();
+    let height = (y2 - y1).abs();
+    width * height
+}
+
+// Function to create a square Rectangle given a starting point and size
+fn square(top_left: Point, size: f32) -> Rectangle {
+    let x = top_left.x;
+    let y = top_left.y;
+    Rectangle {
+        top_left,
+        bottom_right: Point {
+            x: x + size,
+            y: y + size,
+        },
+    }
 }
